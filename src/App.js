@@ -1,28 +1,30 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import { TextField } from 'mui-rff';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import { IconButton, InputAdornment } from '@material-ui/core';
+import {
+  Button,
+  Grid,
+  Card,
+  CardContent,
+  Box,
+  Typography,
+  InputAdornment,
+  IconButton,
+} from '@material-ui/core';
 import { Visibility } from '@material-ui/icons';
+import { TextField, makeValidate } from 'mui-rff';
 import { Form } from 'react-final-form';
-import { makeValidate } from 'react-final-form';
 import * as Yup from 'yup';
 
+const schema = Yup.object().shape({
+  email: Yup.string().email().required(),
+  password: Yup.string().required(),
+});
+
 function App() {
-  const onSubmit = (values) => {
-    console.log({ values });
-  };
+  function onSubmit(values) {
+    console.log(values);
+  }
 
-  const schema = Yup.object().shape({
-    email: Yup.string().email().required(),
-    password: Yup.string().password().required(),
-  });
-
-  const validate = makeValidate(schema);
+  const validade = makeValidate(schema);
 
   return (
     <Grid container justify="center">
@@ -30,17 +32,17 @@ function App() {
         <Card>
           <CardContent>
             <Box display="flex" flexDirection="column">
-              <Typography variant="h4" Align="center">
+              <Typography variant="h4" align="center">
                 Login
               </Typography>
               <Form
-                validate={validate}
+                validate={validade}
                 onSubmit={onSubmit}
                 render={({ handleSubmit }) => (
                   <form onSubmit={handleSubmit} noValidate>
                     <TextField
                       name="email"
-                      label="Email"
+                      label="E-mail"
                       type="email"
                       variant="outlined"
                       fullWidth
@@ -56,54 +58,21 @@ function App() {
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end">
-                            <IconButton aria-label="toggle password visibility">
+                            <IconButton>
                               <Visibility />
                             </IconButton>
                           </InputAdornment>
                         ),
                       }}
                     />
-                    {/* /* <TextField
-                      label="Email"
-                      type="email"
-                      variant="outlined"
-                      fullWidth
-                      margin="normal"
-                      onChange={(event) => setEmail(event.target.value)}
-                      value={email}
-                    />
-                    <TextField
-                      label="Password"
-                      type="password"
-                      variant="outlined"
-                      fullWidth
-                      margin="normal"
-                      onChange={(event) => setPassword(event.target.value)}
-                      value={password}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton aria-label="toggle password visibility">
-                              <Visibility />
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      }}
-                    /> */}
+                    <Box marginTop={4} display="flex" justifyContent="center">
+                      <Button variant="contained" color="primary" type="submit">
+                        Send
+                      </Button>
+                    </Box>
                   </form>
                 )}
               />
-
-              <Box marginTop={4} display="flex" justifyContent="center">
-                <Button
-                  type="submit"
-                  onClick={onSubmit}
-                  variant="contained"
-                  color="primary"
-                >
-                  Send
-                </Button>
-              </Box>
             </Box>
           </CardContent>
         </Card>
