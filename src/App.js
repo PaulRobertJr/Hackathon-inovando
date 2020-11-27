@@ -76,7 +76,12 @@ function App() {
                       }}
                     />
                     <Box marginTop={4} display="flex" justifyContent="center">
-                      <Button type="submit" variant="contained" color="primary">
+                      <Button
+                        onClick={this.prevPage}
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                      >
                         Send
                       </Button>
                     </Box>
